@@ -103,7 +103,54 @@ void bubbleSort_v2(T arr[],int n){
     }
 }
 
-// 
+// TODO:shell sort
+
+
+// 归并排序：就是一个先不断切分，切到最底层，只有一个元素的时候，然后逐级向上归并
+// 缺点就是额外多使用了o（n）的空间
+// 凡是这种切分成和树一样的这种思路都要用到递归的思路
+template<typename T>
+void __mearge(T arr[],int l,int mid,int r){
+    T aux[r - l + 1];
+    for (int i = l; i <= r; i++){
+        aux[i - l] = arr[i];
+    }
+    int i = l;
+    int j = mid + 1;
+    for (int k = l; k <= r;k++){
+        if(i>mid){
+            arr[k] = aux[j - l];
+            j++;
+        }
+        else if(j>r){
+            arr[k] = aux[i - l];
+            i++
+        }
+        else if(aux[i-l]<aux[j-l]){
+            arr[k] = aux[i - l];
+            i++
+        }
+        else{
+            arr[k] = aux[j - l];
+            j++;
+        }
+    }
+}
+// 将[l,r]范围内的数据进行归并排序
+template<typename T>
+void __meargeSort(T arr[], int l, int r){
+    if(l >= r)
+        return;
+    int mid = (l + r) / 2;
+    __meargeSort(arr, l, mid);
+    __meargeSort(arr, mid + 1, r);
+    __mearge(arr, l, mid, r);
+}
+
+template<typename T>
+void meargeSort(T arr[],int n){
+    __meargeSort(arr, 0, n - 1);
+}
 
 int main(){
     
