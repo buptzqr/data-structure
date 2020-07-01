@@ -1,5 +1,5 @@
-#ifndef BINARY_SEARCH
-#define BINARY_SEARCH
+#ifndef BINARY_SEARCH_H
+#define BINARY_SEARCH_H
 #include <iostream>
 using namespace std;
 // TODO:floor和ceil函数
