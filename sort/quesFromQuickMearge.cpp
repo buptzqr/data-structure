@@ -53,7 +53,9 @@ void reverseCount(int arr[], int l, int r, int &reversePairNum)
 int partition(int arr[], int l, int r)
 {
     srand(time(NULL));
-    int selectElement = arr[rand() % l + (r - l + 1)];
+    int selectIdx = rand() % (r - l + 1) + l;
+    swap(arr[l], arr[selectIdx]);
+    int selectElement = arr[l];
     // [l+1,i]<element (j,r]>=element
     int i = l;
     int j = r;
@@ -81,25 +83,25 @@ int findNFromM(int arr[], int l, int r, int n)
         return -1; //返回索引为-1代表没有找到
     }
     int k = partition(arr, l, r);
-    if (k + 1 == n)
+    if (r - k + 1 == n)
     {
         return k;
     }
-    else if (k + 1 > n)
+    else if (r - k + 1 > n)
     {
         // 从左半边寻找
-        findNFromM(arr, l, r - 1, n);
+        return findNFromM(arr, l, r - 1, n);
     }
     else
     {
-        findNFromM(arr, l + 1, r, n);
+        return findNFromM(arr, l + 1, r, n);
     }
 }
 int main()
 {
     int reverseArray[4] = {7, 5, 6, 4};
     int count = 0;
-    reverseCount(reverseArray, 0, 3, count);
-    cout << count;
+    // reverseCount(reverseArray, 0, 3, count);
+    cout << reverseArray[findNFromM(reverseArray, 0, 3, 4)];
     getchar();
 }
