@@ -2,11 +2,12 @@
 #define DESNSEGRAPH_H
 #include <iostream>
 #include <vector>
-#include <assert>
+#include <cassert>
 using namespace std;
 // 邻接矩阵：用二位矩阵表示图的联通方式
 // 连接表：每一行只表示和一个节点相连的其他节点的信息
 // 邻接表适合表示一个稀疏的图，邻接矩阵适合表示稠密图
+// 因为图中存在环，所以一个额外的字段确认节点是否被遍历
 class DenseGraph
 {
 private:
@@ -44,5 +45,37 @@ public:
         assert(w >= 0 && w < n);
         return g[v][w];
     }
+    class AdjIterator
+    {
+    private:
+        DenseGraph &G;
+        int v;
+        int index;
+
+    public:
+        AdjIterator(DenseGraph &graph, int v) : G(graph)
+        {
+            assert(v >= 0 && v < G.n);
+            this->v = v;
+            this->index = -1;
+        }
+        int begin()
+        {
+            index = -1;
+            return next();
+        }
+        // 从当前元素开始找第一个不为false的元素的index
+        int next()
+        {
+            for (index += 1; index < G.g[v].size(); index++)
+                if (G.g[v][index])
+                    return index;
+            return -1;
+        }
+        bool end()
+        {
+            return index >= G.V();
+        }
+    };
 };
 #endif

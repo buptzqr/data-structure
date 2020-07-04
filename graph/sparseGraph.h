@@ -45,5 +45,39 @@ public:
         }
         return true;
     }
+    // 制作图的迭代器，防止需要将SparseGraph中的g暴露出去才可以完成迭代操作
+    class AdjIterator
+    {
+    private:
+        SparseGraph &G;
+        int v;
+        int index;
+
+    public:
+        AdjIterator(SparseGraph &graph, int v) : G(graph)
+        {
+            assert(v >= 0 && v < G.n);
+            this->v = v;
+            this->index = 0;
+        }
+        int begin()
+        {
+            index = 0;
+            if (G.g[v].size())
+                return G.g[v][index];
+            return -1;
+        }
+        int next()
+        {
+            index++;
+            if (index < G.V())
+                return G.g[v][index];
+            return -1;
+        }
+        bool end()
+        {
+            return index >= G.g[v].size();
+        }
+    };
 };
 #endif
