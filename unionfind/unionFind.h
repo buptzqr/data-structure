@@ -14,7 +14,7 @@ private:
     int *rank; //rank[i]表示以i为根的集合所表示的树的层数，和上面的sz有一个就行
 
 public:
-    UnionFindV1(int n)
+    UnionFind(int n)
     {
         count = n;
         parent = new int[n];
@@ -26,7 +26,7 @@ public:
             rank[i] = 1;
         }
     }
-    ~UnionFindV1()
+    ~UnionFind()
     {
         delete[] parent;
         delete[] sz;
