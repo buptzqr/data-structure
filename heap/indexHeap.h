@@ -19,7 +19,7 @@ private:
     int *reverse;
     Item *data;
     int capacity;
-    // 需要注意的是一点对索引进行操作就一定要保证索引不要越界
+    // 需要注意的是一旦对索引进行操作就一定要保证索引不要越界
     void shiftUp(int k)
     {
         while (k > 1 && data[indexes[k]] > data[indexes[k / 2]])
