@@ -5,7 +5,7 @@
 // 元素比较的时候比的是data，元素交换的时候，交换的是索引
 // 一个关键点就是记住indexes的内容是元素的索引，indexes的索引是元素在堆中的位置
 // reverse表示索引i在堆中的位置 也就是index[j] = i reverse[i] = j indexes[reverse[i]]=i reverse[indexes[i]]=i
-// reverse这个技术叫反向查找技术
+// reverse这个技术叫反向查找技术(就是索引和值互相调换了一下)
 #ifndef INDEX_HEAP
 #define INDEX_HEAP
 #include <iostream>
@@ -118,10 +118,10 @@ public:
         int ret = indexes[1] - 1;
         return ret;
     }
-
+    // 索引为i的元素是否在堆中
     bool contain(i)
     {
-        // 也不一定要这样做，直接用count来做不就行了
+        // 也不一定要这样做，直接用count来做不就行了？因为getMax其实导致堆失效了
         assert(i + 1 >= 1 && i + 1 <= capacity);
         return reverse[i + 1] != 0;
     }
@@ -132,7 +132,7 @@ public:
         return data[i + 1];
     }
 
-    // 此时时间复杂度是o（n）
+    // 此时时间复杂度是o（n），这个操作就是要随便改变一个位置的元素的值，然后再重新构建堆，reverse的好处也就是在这里了
     void change(int i, Item item)
     {
         assert(contain(i));
@@ -156,7 +156,7 @@ public:
         i += 1;
         data[i] = item;
         shiftDown(reverse[i]);
-        shifyUp(reverse[i]);
+        shiftUp(reverse[i]);
     }
 };
 #endif

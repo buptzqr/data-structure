@@ -15,28 +15,28 @@
 >### 基本式：
 ```
 int find(int p)
+{
+    assert(p >= 0 && p < count);
+    while (p != parent[p])
     {
-        assert(p >= 0 && p < count);
-        while (p != parent[p])
-        {
-            p = parent[p];
-        }
-        return p;
+        p = parent[p];
     }
+    return p;
+}
 ```
 >### 跳跃式：
 ```
 int findV1(int p)
+{
+    assert(p >= 0 && p < count);
+    while (p != parent[p])
     {
-        assert(p >= 0 && p < count);
-        while (p != parent[p])
-        {
-            // 路径压缩
-            parent[p] = parent[parent[p]];
-            p = parent[p];
-        }
-        return p;
+        // 路径压缩
+        parent[p] = parent[parent[p]];
+        p = parent[p];
     }
+    return p;
+}
 ```
 >### 直接压缩成两层：
 ```

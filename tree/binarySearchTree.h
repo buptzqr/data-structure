@@ -307,7 +307,7 @@ private:
         }
         else
         {
-            return insert(node->rchild, key);
+            return contain(node->rchild, key);
         }
     }
 

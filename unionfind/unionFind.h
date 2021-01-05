@@ -1,5 +1,7 @@
 // 将每个元素看成一个节点，每个节点有一个指针指向他的父亲
 // 优化以后并查集的操作近乎都是o（1）
+// sz这种方式不如用rank这种方式直接，用压缩优化直接将find的时间复杂度
+// 降到o(1)
 #ifndef UNIONFIND_H
 #define UNIONFIND_H
 #include <iostream>
@@ -87,7 +89,7 @@ public:
     {
         int pRoot = find(p);
         int qRoot = find(q);
-        if (p == qRoot)
+        if (pRoot == qRoot)
             return;
         if (rank[pRoot] < rank[qRoot])
         {

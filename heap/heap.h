@@ -13,7 +13,7 @@ private:
     int count;
     Item *data;
     int capacity;
-    // 需要注意的是一点对索引进行操作就一定要保证索引不要越界
+    // 需要注意的一点是对索引进行操作就一定要保证索引不要越界
     void shiftUp(int k)
     {
         while (k > 1 && data[k] > data[k / 2])

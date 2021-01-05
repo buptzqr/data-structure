@@ -1,7 +1,8 @@
 #include <iostream>
 #include <ctime>
 #include <cassert>
-#include "heap.h"
+#include "../heap/heap.h"
+#include <vector>
 using namespace std;
 
 // 所有排序是从小到大排序
@@ -120,8 +121,56 @@ void bubbleSort_v2(T arr[], int n)
         arr[j] = temp;
     }
 }
+// shell sort
+template <typename T>
+void shellSort(T arr[], int n)
+{
+    int k = n;
+    vector<int> disVec;
+    while (k >= 1)
+    {
+        disVec.push_back(k);
+        k /= 3;
+    }
+    for (auto dis : disVec)
+    {
+        for (int i = 0; i < dis; i++)
+        {
+            for (int j = i + dis; j < n; j += dis)
+            {
+                for (int k = j; k >= i + dis; k -= dis)
+                    if (arr[k] < arr[k - dis])
+                        swap(arr[k], arr[k - dis]);
+            }
+        }
+    }
+}
+/* 大神版本
+template<typename T>
+void shellSort(T arr[], int n){
 
-// TODO:shell sort
+    // 计算 increment sequence: 1, 4, 13, 40, 121, 364, 1093...
+    int h = 1;
+    while( h < n/3 )
+        h = 3 * h + 1;
+
+    while( h >= 1 ){
+
+        // h-sort the array
+        for( int i = h ; i < n ; i ++ ){
+
+            // 对 arr[i], arr[i-h], arr[i-2*h], arr[i-3*h]... 使用插入排序
+            T e = arr[i];
+            int j;
+            for( j = i ; j >= h && e < arr[j-h] ; j -= h )
+                arr[j] = arr[j-h];
+            arr[j] = e;
+        }
+
+        h /= 3;
+    }
+}
+*/
 
 // 归并排序：就是一个先不断切分，切到最底层，只有一个元素的时候，然后逐级向上归并
 // 缺点就是额外多使用了o（n）的空间
@@ -375,7 +424,7 @@ void heapSort_v3(T arr[], int n)
 int main()
 {
     int *arr = generateRandomArray(100, 0, 1000);
-    heapSort_v3(arr, 100);
+    shellSort(arr, 100);
     if (sortTest(arr, 100))
     {
         cout << "sort right" << endl;
